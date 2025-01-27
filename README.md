@@ -21,8 +21,8 @@
 ---
 ## 🤔 RESTful API란?
 > **REST**
-**Re**presentational **S**tate **T**ransfer
-웹에 대한 소프트웨어 설계 방법론
+**Re**presentational **S**tate **T**ransfer <br><br>
+웹에 대한 소프트웨어 설계 방법론<br><br>
 
 - 핵심 규칙
     - 자원 : URI로 표현
