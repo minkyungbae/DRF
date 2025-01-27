@@ -20,9 +20,9 @@
 **⇒ 쉽게 말해 어플리케이션과 프로그래밍적으로 소통하는 방법**
 ---
 ## 🤔 RESTful API란?
-> **REST**
+> **REST**<br><br>
 **Re**presentational **S**tate **T**ransfer <br><br>
-웹에 대한 소프트웨어 설계 방법론<br><br>
+웹에 대한 소프트웨어 설계 방법론
 
 - 핵심 규칙
     - 자원 : URI로 표현
