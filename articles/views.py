@@ -2,6 +2,10 @@ from django.shortcuts import render
 from .models import Article
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from rest_framework.decorators import api_view
+from .serializers import ArticleSerializer
+from rest_framework.response import Response
+
 
 def article_list_html(request):
     articles = Article.objects.all()
@@ -31,6 +35,8 @@ def json_02(request):
     res_data = serializers.serialize("json", articles)  # res = response
     return HttpResponse(res_data, content_type="application/json")
 
-
+@api_view(["GET"])
 def json_drf(request):
-    pass
+    articles = Article.objects.all()
+    serializer = ArticleSerializer(articles, many=True) # 단일 객체면 many가 없어도 됨. 지금은 __all__이라서
+    return Response(serializer.data)
