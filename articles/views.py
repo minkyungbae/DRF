@@ -18,10 +18,9 @@ def article_list(request):
     
     elif request.method == "POST":
         serializer = ArticleSerializer(data=request.data) # data에 POST 데이터를 넣어줘요
-        if serializer.is_valid(): # 만약 serializer 값이 유효하다면,
+        if serializer.is_valid(raise_exception=True): # 만약 serializer 값이 유효하고, 예외 발생 True
             serializer.save() # article 생성
             return Response(serializer.data, status=201) # api 201(created)를 반환
-        return Response(serializer.errors, status=400) # 만약 제목을 빼먹었거나 하면 error 반환
 
 
 # 게시글 상세 목록
