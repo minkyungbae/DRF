@@ -12,7 +12,7 @@ urlpatterns = [
          name="comment_list"),
     
     # comment 삭제하기
-    path("comments/<int:pk>/",
+    path("comments/<int:comment_pk>/",
          views.CommentDetailAPIView.as_view(),
          name="comment_detail"),
 ]
