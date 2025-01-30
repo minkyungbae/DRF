@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from .serializers import ArticleSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from rest_framework import status
 
 # 게시글 리스트 보기 및 글 생성하기
 # 함수형일 때는 @api_view를 꼭 적어줘야 함
@@ -24,8 +25,14 @@ def article_list(request):
 
 
 # 게시글 상세 목록
-@api_view(["GET"])
+@api_view(["GET","DELETE"])
 def article_detail(request, pk):
-    article = get_object_or_404(Article, pk=pk) # 없는 pk 값을 불렀을 때, 404 화면이 뜨도록
-    serializer = ArticleSerializer(article)
-    return Response(serializer.data)
+    if request.method == "GET":
+        article = get_object_or_404(Article, pk=pk) # 없는 pk 값을 불렀을 때, 404 화면이 뜨도록
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
+    
+    elif request.method == "DELETE":
+        article = get_object_or_404(Article, pk=pk)
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
