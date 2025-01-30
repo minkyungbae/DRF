@@ -5,38 +5,20 @@ from django.core import serializers
 from rest_framework.decorators import api_view
 from .serializers import ArticleSerializer
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
-
-def article_list_html(request):
-    articles = Article.objects.all()
-    context = {"articles":articles}
-    return render(request, "articles/article_list.html", context)
-
-def json_01(request):
-    articles = Article.objects.all()
-    json_articles = []
-    
-    # Json 형식으로 만들어줌
-    for article in articles:
-        json_articles.append(
-            {
-                "title": article.title,
-                "content": article.content,
-                "created_at": article.created_at,
-                "updated_at": article.updated_at,
-            }
-        )
-    
-    return JsonResponse(json_articles, safe=False)  # dict일 때는 safe를 안 적어도 되지만, 리스트여서 적어줌
-
-
-def json_02(request):
-    articles = Article.objects.all()
-    res_data = serializers.serialize("json", articles)  # res = response
-    return HttpResponse(res_data, content_type="application/json")
-
+# 게시글 리스트 보기
+# 함수형일 때는 @api_view를 꼭 적어줘야 함
 @api_view(["GET"])
-def json_drf(request):
+def article_list(request):
     articles = Article.objects.all()
-    serializer = ArticleSerializer(articles, many=True) # 단일 객체면 many가 없어도 됨. 지금은 __all__이라서
+    serializer = ArticleSerializer(articles, many=True)
+    return Response(serializer.data)
+
+
+# 게시글 상세 목록
+@api_view(["GET"])
+def article_detail(request, pk):
+    article = get_object_or_404(Article, pk=pk) # 없는 pk 값을 불렀을 때, 404 화면이 뜨도록
+    serializer = ArticleSerializer(article)
     return Response(serializer.data)
