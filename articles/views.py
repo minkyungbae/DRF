@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Article
+from .models import Article, Comment
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from rest_framework.decorators import api_view
@@ -64,3 +64,11 @@ class CommentListAPIView(APIView):
             serializer.save(article=article) # 저장할 때, 필요한 나머지 데이터를 article로 채워줌
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
+        
+class CommentDetailAPIView(APIView):
+    # 댓글 삭제하기
+    def delete(self, request, comment_pk):
+        comment = get_object_or_404(Comment, pk=comment_pk) # Comment 모델을 통해서 comment 들고 와요
+        comment.delete() # 가져온 comment를 삭제해주고,
+        return Response(status=status.HTTP_204_NO_CONTENT) # 204를 보여주면 삭제 끝
+    
