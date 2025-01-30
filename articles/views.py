@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 # 게시글 리스트 보기 및 글 생성하기
 # 함수형일 때는 @api_view를 꼭 적어줘야 함
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 def article_list(request):
     if request.method == "GET":
         articles = Article.objects.all()
