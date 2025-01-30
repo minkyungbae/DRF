@@ -7,13 +7,21 @@ from .serializers import ArticleSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-# 게시글 리스트 보기
+# 게시글 리스트 보기 및 글 생성하기
 # 함수형일 때는 @api_view를 꼭 적어줘야 함
 @api_view(["GET"])
 def article_list(request):
-    articles = Article.objects.all()
-    serializer = ArticleSerializer(articles, many=True)
-    return Response(serializer.data)
+    if request.method == "GET":
+        articles = Article.objects.all()
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == "POST":
+        serializer = ArticleSerializer(data=request.data) # data에 POST 데이터를 넣어줘요
+        if serializer.is_valid(): # 만약 serializer 값이 유효하다면,
+            serializer.save() # article 생성
+            return Response(serializer.data, status=201) # api 201(created)를 반환
+        return Response(serializer.errors, status=400) # 만약 제목을 빼먹었거나 하면 error 반환
 
 
 # 게시글 상세 목록
