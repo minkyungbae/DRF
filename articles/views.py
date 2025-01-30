@@ -3,7 +3,7 @@ from .models import Article
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from rest_framework.decorators import api_view
-from .serializers import ArticleSerializer
+from .serializers import ArticleSerializer, CommentSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -39,3 +39,14 @@ class ArticleDetailAPIView(APIView):
         article = get_object_or_404(Article, pk=pk)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+class CommentListAPIView(APIView):
+    def get(self, request, article_pk):
+        # Article 모델에서 찾아와요. 근데 Article 모델에는 comment가 없잖아요?(역참조) ⬇️
+        article = get_object_or_404(Article, pk=article_pk)
+        # 그래서 Comment 모델의 매니저인 "comments"를 데리고 와서, 해당 글에 있는 comments들을 데려와요 ⬇️
+        comments = article.comments.all() # 조회된 comments들을
+        serializer = CommentSerializer(comments, many=True) # serializer에 넣어줬어요. 많으니까 many=True
+        return Response(serializer.data)
+    
