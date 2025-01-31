@@ -66,9 +66,21 @@ class CommentListAPIView(APIView):
         
         
 class CommentDetailAPIView(APIView):
+    # 공통된 get_object를 수정하기 편하게끔 함수 만들어주기
+    def get_object(self, comment_pk):
+        return get_object_or_404(Comment, pk=comment_pk)
+    
     # 댓글 삭제하기
     def delete(self, request, comment_pk):
-        comment = get_object_or_404(Comment, pk=comment_pk) # Comment 모델을 통해서 comment 들고 와요
+        comment = self.get_object(comment_pk) # Comment 모델을 통해서 comment 들고 와요
         comment.delete() # 가져온 comment를 삭제해주고,
         return Response(status=status.HTTP_204_NO_CONTENT) # 204를 보여주면 삭제 끝
+    
+    # 댓글 수정하기
+    def put(self, request, comment_pk):
+        comment = self.get_object(comment_pk)
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
     
