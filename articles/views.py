@@ -3,12 +3,13 @@ from .models import Article, Comment
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from rest_framework.decorators import api_view
-from .serializers import ArticleSerializer, CommentSerializer
+from .serializers import ArticleSerializer, ArticleDetailSerializer, CommentSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 
+# 글 목록 보기, 글 작성하기
 class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외의 method엔 작동 X
     # 글 목록 보기
     def get(self, request):
@@ -23,18 +24,19 @@ class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외�
             serializer.save() # article 생성
             return Response(serializer.data, status=201) # api 201(created)를 반환
         
-        
+
+# 글 상세 목록 보기, 글 수정하기, 글 삭제하기      
 class ArticleDetailAPIView(APIView):
     # 상세 목록 보기
     def get(self, request, pk):
         article = get_object_or_404(Article, pk=pk) # 없는 pk 값을 불렀을 때, 404 화면이 뜨도록
-        serializer = ArticleSerializer(article)
+        serializer = ArticleDetailSerializer(article)
         return Response(serializer.data)
     
     # 글 수정하기
     def put(self, request, pk):
         article = get_object_or_404(Article, pk=pk) # 조회한 article
-        serializer = ArticleSerializer(article, data=request.data, partial=True) # article에 입력한 data를 넣고, 개별 변경 가능
+        serializer = ArticleDetailSerializer(article, data=request.data, partial=True) # article에 입력한 data를 넣고, 개별 변경 가능
         if serializer.is_valid(raise_exception=True): # 만약 serializer 값이 유효하다면, 예외 발생 True
             serializer.save() # 저장하고 수정.
             return Response(serializer.data) # 그 수정된 값을 반환
@@ -45,7 +47,8 @@ class ArticleDetailAPIView(APIView):
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-    
+
+# 댓글 조회하기, 댓글 생성하기  
 class CommentListAPIView(APIView):
     # 특정 article에 있는 댓글 조회하기
     def get(self, request, article_pk):
@@ -64,7 +67,8 @@ class CommentListAPIView(APIView):
             serializer.save(article=article) # 저장할 때, 필요한 나머지 데이터를 article로 채워줌
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-        
+
+# 댓글 삭제하기, 댓글 수정하기     
 class CommentDetailAPIView(APIView):
     # 공통된 get_object를 수정하기 편하게끔 함수 만들어주기
     def get_object(self, comment_pk):
