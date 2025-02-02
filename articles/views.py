@@ -8,9 +8,14 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 # 글 목록 보기, 글 작성하기
 class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외의 method엔 작동 X
+    
+    #APIView에 있는 permission_classes를 활용해서 접근 제한하기
+    permission_classes = [IsAuthenticated]
+    
     # 글 목록 보기
     def get(self, request):
         articles = Article.objects.all()
