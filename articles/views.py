@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 # 글 목록 보기, 글 작성하기
 class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외의 method엔 작동 X
     
-    #APIView에 있는 permission_classes를 활용해서 접근 제한하기
+    # APIView에 있는 permission_classes를 활용해서 접근 제한하기
     permission_classes = [IsAuthenticated]
     
     # 글 목록 보기
@@ -32,6 +32,10 @@ class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외�
 
 # 글 상세 목록 보기, 글 수정하기, 글 삭제하기      
 class ArticleDetailAPIView(APIView):
+    
+    # APIView에 있는 permission_classes를 활용해서 접근 제한하기
+    permission_classes = [IsAuthenticated]
+    
     # 상세 목록 보기
     def get(self, request, pk):
         article = get_object_or_404(Article, pk=pk) # 없는 pk 값을 불렀을 때, 404 화면이 뜨도록
@@ -55,6 +59,10 @@ class ArticleDetailAPIView(APIView):
 
 # 댓글 조회하기, 댓글 생성하기  
 class CommentListAPIView(APIView):
+    
+    # APIView에 있는 permission_classes를 활용해서 접근 제한하기
+    permission_classes = [IsAuthenticated]
+    
     # 특정 article에 있는 댓글 조회하기
     def get(self, request, article_pk):
         # Article 모델에서 찾아와요. 근데 Article 모델에는 comment가 없잖아요?(역참조) ⬇️
@@ -75,6 +83,10 @@ class CommentListAPIView(APIView):
 
 # 댓글 삭제하기, 댓글 수정하기     
 class CommentDetailAPIView(APIView):
+    
+    # APIView에 있는 permission_classes를 활용해서 접근 제한하기
+    permission_classes = [IsAuthenticated]
+    
     # 공통된 get_object를 수정하기 편하게끔 함수 만들어주기
     def get_object(self, comment_pk):
         return get_object_or_404(Comment, pk=comment_pk)
