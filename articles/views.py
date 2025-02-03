@@ -104,4 +104,19 @@ class CommentDetailAPIView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
-    
+
+
+# 정참조 조회하기
+@api_view(["GET"])
+def check_sql(request):
+    from django.db import connection
+
+    comments = Comment.objects.all().select_related("article")
+    for comment in comments:
+        print(comment.article.title)
+
+    print("-" * 30)
+    print(connection.queries)
+
+    return Response()
+
