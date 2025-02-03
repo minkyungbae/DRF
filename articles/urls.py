@@ -15,4 +15,7 @@ urlpatterns = [
     path("comments/<int:comment_pk>/",
          views.CommentDetailAPIView.as_view(),
          name="comment_detail"),
+    
+    # sql 확인하기
+    path("check-sql/", views.check_sql),
 ]
