@@ -1,15 +1,18 @@
 asgiref==3.8.1
 asttokens==3.0.0
+autopep8==2.3.2
 certifi==2024.12.14
 charset-normalizer==3.4.1
 decorator==5.1.1
 Django==4.2
 django-extensions==3.2.3
 django-seed==0.3.1
+django-silk==5.3.2
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.4.0
 executing==2.2.0
 Faker==35.0.0
+gprof2dot==2024.6.6
 idna==3.10
 ipython==8.31.0
 jedi==0.19.2
@@ -21,6 +24,7 @@ prompt_toolkit==3.0.50
 psycopg2==2.9.10
 ptyprocess==0.7.0
 pure_eval==0.2.3
+pycodestyle==2.12.1
 Pygments==2.19.1
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
