@@ -6,7 +6,7 @@ class Product(models.Model):
     ("V", "Vegetable"),
     ("M", "Meat"),
     ("O", "Other"),
-)
+    )
     name = models.CharField(max_length=30)
     price = models.PositiveIntegerField() # 정수값만
     quantity = models.PositiveIntegerField()
