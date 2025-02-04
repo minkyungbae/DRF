@@ -43,12 +43,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django_extensions',
+    'silk',
+    'drf_spectacular',
     
     'articles',
     'accounts',
     'products',
-    'silk',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -110,8 +111,8 @@ AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
+        "rest_framework_simplejwt.authentication.JWTAuthentication",],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -120,6 +121,12 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'DRF RESTful API',
+    'DESCRIPTION': 'My API description',
+    'VERSION': '1.0.0',
 }
 
 
