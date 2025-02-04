@@ -6,6 +6,7 @@ charset-normalizer==3.4.1
 decorator==5.1.1
 Django==4.2
 django-extensions==3.2.3
+django-redis==5.4.0
 django-seed==0.3.1
 django-silk==5.3.2
 djangorestframework==3.15.2
@@ -28,6 +29,7 @@ pycodestyle==2.12.1
 Pygments==2.19.1
 PyJWT==2.10.1
 python-dateutil==2.9.0.post0
+redis==5.2.1
 requests==2.32.3
 six==1.17.0
 sqlparse==0.5.3
