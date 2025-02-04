@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from drf_spectacular.utils import extend_schema
 
 # 글 목록 보기, 글 작성하기
 class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외의 method엔 작동 X
@@ -16,11 +17,21 @@ class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외�
     # APIView에 있는 permission_classes를 활용해서 접근 제한하기
     permission_classes = [IsAuthenticated]
     
+    @extend_schema(
+        tags=["Articles"],
+        description="Article 목록 조회를 위한 API",
+    )
+    
     # 글 목록 보기
     def get(self, request):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
+    
+    @extend_schema(
+        tags=["Articles"],
+        description="Article 생성을 위한 API",
+    )
     
     # 글 작성하기
     def post(self, request):
