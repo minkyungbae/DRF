@@ -31,6 +31,7 @@ class ArticleListAPIView(APIView):  # GET, POST만 정의돼 있어서 그 외�
     @extend_schema(
         tags=["Articles"],
         description="Article 생성을 위한 API",
+        request=ArticleSerializer,
     )
     
     # 글 작성하기
