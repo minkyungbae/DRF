@@ -28,7 +28,7 @@ urlpatterns = [
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
 
 
-urlpatterns = [
+urlpatterns += [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path(
         'api/schema/swagger-ui/',
