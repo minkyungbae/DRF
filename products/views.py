@@ -7,7 +7,7 @@ from .serializers import ProductSerializer
 
 @api_view(["GET"])
 def product_list(request):
-    products = Product.pbjects.all()
+    products = Product.objects.all()
     serializer = ProductSerializer(products, many=True)
     json_reponse = serializer.data
     return Response(json_reponse)
