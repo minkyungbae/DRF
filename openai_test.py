@@ -1,10 +1,7 @@
 from openai import OpenAI
 from api_pjt import config
 
-CLIENT = OpenAI(
-    api_key=config.OPENAI_API_KEY,
-)
-
+CLIENT = OpenAI(api_key=config.OPENAI_API_KEY)
 
 def ask_to_gpt(instructions, message):
     completion = CLIENT.chat.completions.create(
@@ -17,12 +14,10 @@ def ask_to_gpt(instructions, message):
             {
                 "role": "user",
                 "content": message,
-            },
-        ],
-    )
+            },],)
     return completion.choices[0].message.content
 
-
+# 프롬포트
 system_instructions = """
 이제부터 너는 '민경 카페'의 직원이야.
 아래 종류의 음료 카테고리에서 주문을 받고, 주문을 처리하는 대화를 진행해.
