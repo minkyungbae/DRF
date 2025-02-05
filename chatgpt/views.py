@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .bots import translate_bot
 
-class TranslateAPIView():
+class TranslateAPIView(APIView):
     
     def post(self, request):
         data = request.data # request 받은 data를 data에 넣기
