@@ -48,9 +48,12 @@ INSTALLED_APPS = [
     'silk',
     'drf_spectacular',
     
+    #
+    # local app
     'articles',
     'accounts',
     'products',
+    'chatgpt',
 
 ]
 
